@@ -8,12 +8,10 @@
 import Foundation
 
 struct PokemonListResponse: Decodable {
-    let count: Int
-    let next: String?
-    let previous: String?
-    let results: [Pokemon]
+    let name: String
+    let url: String
     
     enum CodingKeys: String, CodingKey {
-        case count, next, previous, results
+        case name, url
     }
 }

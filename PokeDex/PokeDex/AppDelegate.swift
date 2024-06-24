@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // DI Container
         container.register(type: Core.self, instance: core)
-        container.register(type: ServiceCore.self, instance: ServiceCore())
+        container.register(type: ServiceCoreProtocol.self, instance: ServiceCore())
         return true
     }
 

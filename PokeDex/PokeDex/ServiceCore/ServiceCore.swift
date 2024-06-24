@@ -8,20 +8,26 @@
 import Foundation
 
 protocol ServiceCoreProtocol{
-    func fetchPokemon(offset: Int, limit: Int) async -> Result<[PokemonListResponse], Error>
+    func fetchPokemon() async -> Result<[PokemonListResponse], Error>
 }
 
 struct ServiceCore:  ServiceCoreProtocol {
-    private let baseURL = "https://pokeapi.co/api/v2/pokemon"
+    private let baseURL = "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20"
     
-    func fetchPokemon(offset: Int, limit: Int) async -> Result<[PokemonListResponse], Error> {
-        let url = URL(string: "\(baseURL)?offset=\(offset)&limit=\(limit)")!
+    func fetchPokemon() async -> Result<[PokemonListResponse], Error> {
         
-        var request = URLRequest(url: url)
+        guard let url = URL(string: "\(baseURL)") else {
+            return (.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
+        }
+        
+        let request = URLRequest(url: url)
         
         return await withCheckedContinuation { continuation in
             
             URLSession.shared.dataTask(with: request) { data, response, error in
+                
+                
+                
                 guard let data = data, error == nil else {
                     return continuation.resume(returning: .failure(error ?? NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
                 }

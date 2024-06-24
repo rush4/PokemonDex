@@ -27,6 +27,7 @@ public class MainCoordinator: NSObject {
         
         let viewController = PokemonListVc(nibName: "PokemonListVc", bundle: Bundle.main)
         let viewModel = PokemonListVm()
+        viewController.viewModel = viewModel
         viewModel.goToPokemonDetailsClosure = { [weak self] id in
             guard let self = self else { return }
         }
