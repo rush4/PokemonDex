@@ -8,13 +8,13 @@
 import Foundation
 
 protocol ServiceCoreProtocol{
-    func fetchPokemon() async -> Result<[PokemonListResponse], Error>
+    func fetchPokemon() async -> Result<PokemonListResponse, Error>
 }
 
 struct ServiceCore:  ServiceCoreProtocol {
     private let baseURL = "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20"
     
-    func fetchPokemon() async -> Result<[PokemonListResponse], Error> {
+    func fetchPokemon() async -> Result<PokemonListResponse, Error> {
         
         guard let url = URL(string: "\(baseURL)") else {
             return (.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
@@ -33,7 +33,7 @@ struct ServiceCore:  ServiceCoreProtocol {
                 }
                 
                 do {
-                    let response = try JSONDecoder().decode([PokemonListResponse].self, from: data)
+                    let response = try JSONDecoder().decode(PokemonListResponse.self, from: data)
                     print(response)
                     return continuation.resume(returning: .success(response))
                 } catch {
@@ -44,12 +44,6 @@ struct ServiceCore:  ServiceCoreProtocol {
             }.resume()
         }
     }
-}
-
-
-struct Pokemon: Codable {
-    let name: String
-    let url: String
 }
 
 

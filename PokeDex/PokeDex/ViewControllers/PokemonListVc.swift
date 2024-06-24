@@ -43,6 +43,7 @@ class PokemonListVc: UIViewController {
     
     func configureCancellables() {
         viewModel.$pokemonList.sink { [weak self] value in
+            self?.sourceDelegate.items = value
             self?.pokemonListTableView.reloadData()
         }
         .store(in: &cancellable)

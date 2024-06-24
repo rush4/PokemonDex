@@ -9,7 +9,7 @@ import UIKit
 
 class PokemonListTableViewSourceDelegate: NSObject, UITableViewDataSource, UITableViewDelegate, CellDequeuer {
         
-    var items: [PokemonListResponse] = [] {
+    var items: [Pokemon] = [] {
         didSet {
             reloadTable?()
         }

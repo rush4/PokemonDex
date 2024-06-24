@@ -17,7 +17,7 @@ class PokemonListVm {
     // Service object to fetch pokemon data
     var service: ServiceCoreProtocol? = nil
     
-    @Published var pokemonList: [PokemonListResponse] = []
+    @Published var pokemonList: [Pokemon] = []
     
     // Initialization
     init() {
@@ -45,8 +45,8 @@ class PokemonListVm {
             
             switch result {
             case .success(let response):
-                self.pokemonList = response
-            case .failure(let failure):
+                self.pokemonList = response.results
+            case .failure(_):
                 print("Error fetching pokemon")
                 break
             case .none:

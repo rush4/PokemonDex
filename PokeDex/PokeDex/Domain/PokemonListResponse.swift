@@ -7,11 +7,31 @@
 
 import Foundation
 
-struct PokemonListResponse: Decodable {
+struct PokemonListResponse: Codable {
+    let count: Int
+    let next: String?
+    let previous: String?
+    let results: [Pokemon]
+}
+
+struct Pokemon: Codable {
     let name: String
-    let url: String
-    
+    let sprites: Sprites
+}
+
+struct Sprites: Codable {
+    let other: OtherSprites
+}
+
+struct OtherSprites: Codable {
+    let officialArtwork: OfficialArtwork
+
     enum CodingKeys: String, CodingKey {
-        case name, url
+        case officialArtwork = "official-artwork"
     }
+}
+
+struct OfficialArtwork: Codable {
+    let frontDefault: String
+    let frontShiny: String?
 }
