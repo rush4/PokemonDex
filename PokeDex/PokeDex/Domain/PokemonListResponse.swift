@@ -11,27 +11,45 @@ struct PokemonListResponse: Codable {
     let count: Int
     let next: String?
     let previous: String?
-    let results: [Pokemon]
+    let results: [PokemonType]
 }
 
-struct Pokemon: Codable {
+class Pokemon {
     let name: String
-    let sprites: Sprites
-}
-
-struct Sprites: Codable {
-    let other: OtherSprites
-}
-
-struct OtherSprites: Codable {
-    let officialArtwork: OfficialArtwork
-
-    enum CodingKeys: String, CodingKey {
-        case officialArtwork = "official-artwork"
+    let image: String
+    let description: String
+    let types: [PokemonTypeEntry]
+    
+    init(name: String, image: String, description: String, types: [PokemonTypeEntry]) {
+        self.name = name
+        self.image = image
+        self.description = description
+        self.types = types
     }
 }
 
-struct OfficialArtwork: Codable {
-    let frontDefault: String
-    let frontShiny: String?
+
+struct PokemonDetailsResponse: Codable {
+    let sprites: Sprites
+    let types: [PokemonTypeEntry]
+    let species: PokemonSpecies
+}
+
+struct Sprites: Codable {
+    let front_default: String
+}
+
+struct PokemonTypeEntry: Codable {
+    let slot: Int
+    let type: PokemonType
+}
+
+struct PokemonType: Codable {
+    let name: String
+    let url: String
+}
+
+struct PokemonSpecies: Codable {
+    let name: String
+    let url: String
 }

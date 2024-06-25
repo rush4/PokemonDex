@@ -8,9 +8,10 @@
 import UIKit
 import Combine
 
-class PokemonListVc: UIViewController {
+class PokemonListVc: UIViewController, UISearchBarDelegate {
     
-    
+    @IBOutlet weak var topImageView: UIImageView!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pokemonListTableView: UITableView!
     
     var sourceDelegate: PokemonListTableViewSourceDelegate!
@@ -35,16 +36,19 @@ class PokemonListVc: UIViewController {
         pokemonListTableView.registerNibWithClassType(type: PokemonListTableViewCell.self)
         pokemonListTableView.delegate = sourceDelegate
         pokemonListTableView.dataSource = sourceDelegate
+    }
+    
+    func setupSearchBar(){
         
-//        sourceDelegate.itemSelected = { item in
-//            self.viewModel.deleteUser(int: item)
-//        }
+        self.searchBar.delegate = self
     }
     
     func configureCancellables() {
         viewModel.$pokemonList.sink { [weak self] value in
-            self?.sourceDelegate.items = value
-            self?.pokemonListTableView.reloadData()
+            DispatchQueue.main.async {
+                self?.sourceDelegate.items = value
+                self?.pokemonListTableView.reloadData()
+            }
         }
         .store(in: &cancellable)
     }

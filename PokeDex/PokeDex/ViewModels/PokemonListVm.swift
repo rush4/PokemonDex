@@ -32,26 +32,77 @@ class PokemonListVm {
     }
     
     func viewIsReady() {
-//        guard !isMock else {
-//            self.view?.viewState = listViewState
-//            return
-//        }
+        //        guard !isMock else {
+        //            self.view?.viewState = listViewState
+        //            return
+        //        }
         retrieveData()
     }
     
     func retrieveData(){
-        Task { @MainActor in
-            let result = await service?.fetchPokemon()
+        Task {
+            let result = await service?.fetchPokemonList()
             
             switch result {
             case .success(let response):
-                self.pokemonList = response.results
+                                
+                await self.fetchPokemonDetails(for: response.results)
+                
             case .failure(_):
                 print("Error fetching pokemon")
                 break
             case .none:
                 break
             }
+        }
+    }
+    
+    func fetchPokemonDetails(for list: [PokemonType]) async {
+        
+        var arrayOfPokemon: [Pokemon] = []
+        
+        for item in list {
+            
+            let details = await self.service?.fetchPokemonDetails(url: item.url)
+            
+            switch details {
+            case .success(let response):
+                
+                let description = await self.retrieveSpecies(response.species.url)
+                
+                let pokemon : Pokemon = Pokemon(name: item.name,
+                                                image: response.sprites.front_default,
+                                                description: description ?? "",
+                                                types: response.types)
+                
+                arrayOfPokemon.append(pokemon)
+                
+            default:
+                break
+            }
+            
+        }
+        self.pokemonList = arrayOfPokemon
+    }
+    
+    func retrieveSpecies(_ url: String) async -> String? {
+        
+        let species = await service?.fetchPokemonSpecies(url: url)
+        
+        switch species {
+        case .success(let response):
+            
+            let description = response.flavor_text_entries.filter { item in
+                item.version.name == "shield" && item.language.name == "en"
+            }
+            
+            return description.first?.flavor_text
+            
+        case .failure(_):
+            print("Error fetching pokemon")
+            return nil
+        case .none:
+            return nil
         }
     }
 }

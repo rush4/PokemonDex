@@ -10,8 +10,6 @@ import UIKit
 
 protocol CellDequeuer {
     func dequeueCell<T: UITableViewCell> (tableView: UITableView, indexPath: IndexPath) -> T
-    func dequeueCell<T: UICollectionViewCell> (collectionView: UICollectionView, indexPath: IndexPath) -> T
-    func dequeueReusableView<T: UICollectionReusableView> (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> T
 }
 
 extension CellDequeuer {
@@ -29,36 +27,6 @@ extension CellDequeuer {
         }
         
         return cell
-    }
-    
-    func dequeueCell<T: UICollectionViewCell> (collectionView: UICollectionView, indexPath: IndexPath) -> T {
-        // this pulls out "MyApp.MyViewController"
-        let fullName = NSStringFromClass(T.self)
-        
-        // this splits by the dot and uses everything after, giving "MyViewController"
-        let className = fullName.components(separatedBy: ".")[1]
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: className, for: indexPath) as? T
-            else {
-                fatalError("\(className) must have the right identifer")
-        }
-        
-        return cell
-    }
-    
-    func dequeueReusableView<T: UICollectionReusableView> (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> T {
-        // this pulls out "MyApp.MyViewController"
-        let fullName = NSStringFromClass(T.self)
-        
-        // this splits by the dot and uses everything after, giving "MyViewController"
-        let className = fullName.components(separatedBy: ".")[1]
-        
-        guard let reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: className, for: indexPath) as? T else {
-            fatalError("\(className) must have the right identifer")
-        }
-        
-        // sectionHeader.titleLabel.text = items[indexPath.section].title //self.readFrom(.recipe_ingredients)
-        return reusableView
     }
 }
 

@@ -11,6 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PokemonListVc" customModule="PokeDex" customModuleProvider="target">
             <connections>
                 <outlet property="pokemonListTableView" destination="AlR-ON-DMt" id="cja-n7-gIs"/>
+                <outlet property="searchBar" destination="iY1-7a-yAG" id="Nbs-xa-I1B"/>
+                <outlet property="topImageView" destination="x2S-Uq-zp8" id="9Ue-cc-M8e"/>
                 <outlet property="view" destination="iN0-l3-epB" id="4zx-XV-L3Y"/>
             </connections>
         </placeholder>
@@ -20,19 +22,48 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="AlR-ON-DMt">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="8" y="187" width="377" height="623"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nXV-cG-6sT">
+                    <rect key="frame" x="0.0" y="59" width="393" height="120"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x2S-Uq-zp8">
+                            <rect key="frame" x="8" y="8" width="377" height="104"/>
+                        </imageView>
+                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="iY1-7a-yAG">
+                            <rect key="frame" x="8" y="56" width="377" height="56"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="3Ow-zw-5Ed"/>
+                            </connections>
+                        </searchBar>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="iY1-7a-yAG" firstAttribute="leading" secondItem="nXV-cG-6sT" secondAttribute="leading" constant="8" id="9bc-u5-1b2"/>
+                        <constraint firstAttribute="trailing" secondItem="iY1-7a-yAG" secondAttribute="trailing" constant="8" id="CTi-HZ-xUR"/>
+                        <constraint firstAttribute="bottom" secondItem="iY1-7a-yAG" secondAttribute="bottom" constant="8" id="OgV-EW-gQ5"/>
+                        <constraint firstAttribute="bottom" secondItem="x2S-Uq-zp8" secondAttribute="bottom" constant="8" id="P7z-9h-nC1"/>
+                        <constraint firstAttribute="trailing" secondItem="x2S-Uq-zp8" secondAttribute="trailing" constant="8" id="Tsh-Th-pqa"/>
+                        <constraint firstAttribute="height" constant="120" id="XWj-0c-oZz"/>
+                        <constraint firstItem="x2S-Uq-zp8" firstAttribute="top" secondItem="nXV-cG-6sT" secondAttribute="top" constant="8" id="bdZ-lr-OHy"/>
+                        <constraint firstItem="x2S-Uq-zp8" firstAttribute="leading" secondItem="nXV-cG-6sT" secondAttribute="leading" constant="8" id="nvK-bM-P5w"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="AlR-ON-DMt" secondAttribute="trailing" id="B0f-qX-p6b"/>
-                <constraint firstItem="AlR-ON-DMt" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="UNG-QV-cdb"/>
-                <constraint firstItem="AlR-ON-DMt" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="VmG-ds-ipz"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="AlR-ON-DMt" secondAttribute="bottom" id="dUK-CN-bbr"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="AlR-ON-DMt" secondAttribute="trailing" constant="8" id="B0f-qX-p6b"/>
+                <constraint firstItem="nXV-cG-6sT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="C3X-3f-Sth"/>
+                <constraint firstItem="AlR-ON-DMt" firstAttribute="top" secondItem="nXV-cG-6sT" secondAttribute="bottom" constant="8" id="Gfc-yA-JT5"/>
+                <constraint firstItem="nXV-cG-6sT" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Orh-vO-fCp"/>
+                <constraint firstItem="AlR-ON-DMt" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="VmG-ds-ipz"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="AlR-ON-DMt" secondAttribute="bottom" constant="8" id="dUK-CN-bbr"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="nXV-cG-6sT" secondAttribute="trailing" id="tBf-ic-2Do"/>
             </constraints>
-            <point key="canvasLocation" x="138" y="20"/>
+            <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>

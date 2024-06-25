@@ -16,7 +16,6 @@ class PokemonListTableViewSourceDelegate: NSObject, UITableViewDataSource, UITab
     }
     
     var reloadTable: (() -> Void)?
-    var itemSelected: ((_ index: Int) -> Void)?
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
@@ -31,21 +30,7 @@ class PokemonListTableViewSourceDelegate: NSObject, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
-    }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        items[indexPath.row].isSelected = true
-//    }
-//    
-//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-//        items[indexPath.row].isSelected = false
-//    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCell.EditingStyle.delete {
-            itemSelected?(indexPath.row)
-        }
+        return 180
     }
 }
 
