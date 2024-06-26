@@ -40,8 +40,12 @@ class PokemonListVm {
     func searchData(query: String) {
         
         pokemonListFiltered = pokemonList.filter({ pokemon in
-            pokemon.name.contains(query)
+            let name = pokemon.name.uppercased()
+            return name.contains(query.uppercased())
         })
+        
+        
+        
     }
     
     func retrieveData(){

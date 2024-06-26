@@ -35,9 +35,11 @@ class PokemonListVc: UIViewController, UISearchBarDelegate {
     func setupTable() {
         sourceDelegate = PokemonListTableViewSourceDelegate()
         sourceDelegate.getDataAndReloadTable = {
-            self.viewModel.retrieveData()
-            let indexPath = IndexPath(row: 0, section: 0)
-            self.pokemonListTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            if self.viewModel.pokemonListFiltered.count == 0 {
+                self.viewModel.retrieveData()
+                let indexPath = IndexPath(row: 0, section: 0)
+                self.pokemonListTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            }
         }
         pokemonListTableView.registerNibWithClassType(type: PokemonListTableViewCell.self)
         pokemonListTableView.delegate = sourceDelegate
@@ -45,11 +47,13 @@ class PokemonListVc: UIViewController, UISearchBarDelegate {
         
     }
     
-    func setupSearchBar(){
+    private func setupSearchBar() {
+        let publisher = NotificationCenter.default.publisher(for: UISearchTextField.textDidChangeNotification, object: self.searchBar.searchTextField)
         
-        searchBar.textDidChangePublisher
-            .sink { [weak self] searchText in
-                self?.viewModel.searchData(query: searchText)
+        publisher
+            .compactMap { ($0.object as? UISearchTextField)?.text }
+            .sink { [weak self] string in
+                self?.viewModel.searchData(query: string)
             }
             .store(in: &cancellable)
     }
@@ -63,8 +67,7 @@ class PokemonListVc: UIViewController, UISearchBarDelegate {
         }
         .store(in: &cancellable)
         viewModel.$pokemonListFiltered.sink { [weak self] value in
-            
-            if value.count != 0 {
+                    if value.count != 0 {
                 DispatchQueue.main.async {
                     self?.sourceDelegate.items = value
                     self?.pokemonListTableView.reloadData()

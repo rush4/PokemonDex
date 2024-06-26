@@ -15,4 +15,14 @@ extension UIViewController {
         view.backgroundColor = .white
         view = customView
     }
+    
+    func dismissKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target:     self, action:    #selector(UIViewController.dismissKeyboardTouchOutside))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboardTouchOutside() {
+        view.endEditing(true)
+    }
 }
