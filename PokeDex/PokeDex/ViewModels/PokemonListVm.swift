@@ -16,6 +16,7 @@ class PokemonListVm {
     
     @Published var pokemonList: [Pokemon] = []
     @Published var pokemonListFiltered: [Pokemon] = []
+    var queryToSearch: String?
     
     // Initialization
     init() {
@@ -38,7 +39,7 @@ class PokemonListVm {
     }
     
     func searchData(query: String) {
-        
+        self.queryToSearch = query
         pokemonListFiltered = pokemonList.filter({ pokemon in
             let name = pokemon.name.uppercased()
             return name.contains(query.uppercased())

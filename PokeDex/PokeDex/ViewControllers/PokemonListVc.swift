@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class PokemonListVc: UIViewController, UISearchBarDelegate {
+class PokemonListVc: UIViewController {
     
     @IBOutlet weak var topImageView: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -26,6 +26,7 @@ class PokemonListVc: UIViewController, UISearchBarDelegate {
         setupTable()
         setupSearchBar()
         configureCancellables()
+        dismissKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,7 +68,7 @@ class PokemonListVc: UIViewController, UISearchBarDelegate {
         }
         .store(in: &cancellable)
         viewModel.$pokemonListFiltered.sink { [weak self] value in
-                    if value.count != 0 {
+            if let query = self?.viewModel.queryToSearch, !query.isEmpty {
                 DispatchQueue.main.async {
                     self?.sourceDelegate.items = value
                     self?.pokemonListTableView.reloadData()
