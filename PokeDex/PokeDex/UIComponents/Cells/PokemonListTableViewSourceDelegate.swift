@@ -16,6 +16,7 @@ class PokemonListTableViewSourceDelegate: NSObject, UITableViewDataSource, UITab
     }
     
     var reloadTable: (() -> Void)?
+    var getDataAndReloadTable: (() -> Void)?
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
@@ -31,6 +32,11 @@ class PokemonListTableViewSourceDelegate: NSObject, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 180
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard indexPath.row == items.count - 1 else { return }
+        self.getDataAndReloadTable?()
     }
 }
 

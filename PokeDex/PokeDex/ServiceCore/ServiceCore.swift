@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ServiceCoreProtocol{
-    func fetchPokemonList() async -> Result<PokemonListResponse, Error>
+    func fetchPokemonList(_ numberOfRow: Int) async -> Result<PokemonListResponse, Error>
     func fetchPokemonDetails(url: String) async -> Result<PokemonDetailsResponse, Error>
     func fetchPokemonSpecies(url: String) async -> Result<PokemonSpeciesResponse, Error>
 }
@@ -16,9 +16,11 @@ protocol ServiceCoreProtocol{
 struct ServiceCore:  ServiceCoreProtocol {
     private let baseURL = "https://pokeapi.co/api/v2/"
     
-    func fetchPokemonList() async -> Result<PokemonListResponse, Error> {
+    func fetchPokemonList(_ numberOfRow: Int) async -> Result<PokemonListResponse, Error> {
         
-        guard let url = URL(string: "\(baseURL)pokemon?offset=20&limit=20") else {
+        let offset = numberOfRow + 20
+        
+        guard let url = URL(string: "\(baseURL)pokemon?offset=\(offset)&limit=20") else {
             return (.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
         }
         

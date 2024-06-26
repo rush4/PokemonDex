@@ -11,13 +11,11 @@ import Combine
 
 class PokemonListVm {
     
-    // Closure to handle navigation to pokemon details
-    var goToPokemonDetailsClosure: ((_ cryptoId: String) -> Void)?
-    
     // Service object to fetch pokemon data
     var service: ServiceCoreProtocol? = nil
     
     @Published var pokemonList: [Pokemon] = []
+    @Published var pokemonListFiltered: [Pokemon] = []
     
     // Initialization
     init() {
@@ -39,9 +37,16 @@ class PokemonListVm {
         retrieveData()
     }
     
+    func searchData(query: String) {
+        
+        pokemonListFiltered = pokemonList.filter({ pokemon in
+            pokemon.name.contains(query)
+        })
+    }
+    
     func retrieveData(){
         Task {
-            let result = await service?.fetchPokemonList()
+            let result = await service?.fetchPokemonList(self.pokemonList.count)
             
             switch result {
             case .success(let response):

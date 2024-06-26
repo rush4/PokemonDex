@@ -24,6 +24,7 @@ class PokemonListVc: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         loadView()
         setupTable()
+        setupSearchBar()
         configureCancellables()
     }
     
@@ -33,14 +34,24 @@ class PokemonListVc: UIViewController, UISearchBarDelegate {
     
     func setupTable() {
         sourceDelegate = PokemonListTableViewSourceDelegate()
+        sourceDelegate.getDataAndReloadTable = {
+            self.viewModel.retrieveData()
+            let indexPath = IndexPath(row: 0, section: 0)
+            self.pokemonListTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
         pokemonListTableView.registerNibWithClassType(type: PokemonListTableViewCell.self)
         pokemonListTableView.delegate = sourceDelegate
         pokemonListTableView.dataSource = sourceDelegate
+        
     }
     
     func setupSearchBar(){
         
-        self.searchBar.delegate = self
+        searchBar.textDidChangePublisher
+            .sink { [weak self] searchText in
+                self?.viewModel.searchData(query: searchText)
+            }
+            .store(in: &cancellable)
     }
     
     func configureCancellables() {
@@ -48,6 +59,21 @@ class PokemonListVc: UIViewController, UISearchBarDelegate {
             DispatchQueue.main.async {
                 self?.sourceDelegate.items = value
                 self?.pokemonListTableView.reloadData()
+            }
+        }
+        .store(in: &cancellable)
+        viewModel.$pokemonListFiltered.sink { [weak self] value in
+            
+            if value.count != 0 {
+                DispatchQueue.main.async {
+                    self?.sourceDelegate.items = value
+                    self?.pokemonListTableView.reloadData()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.sourceDelegate.items = self?.viewModel.pokemonList ?? []
+                    self?.pokemonListTableView.reloadData()
+                }
             }
         }
         .store(in: &cancellable)
