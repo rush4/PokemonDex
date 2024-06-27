@@ -12,9 +12,10 @@ class FakeCore: BaseCore {
     /// Dependencies container
     let container: Container
     
-    lazy var serviceCore: ServiceCoreProtocol = ServiceCore()
+    lazy var serviceCore: ServiceCoreProtocol = FakeService()
     
-    init(container: Container) {
+    init(container: Container, service: ServiceCoreProtocol) {
         self.container = container
+        self.serviceCore = service
     }
 }

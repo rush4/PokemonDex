@@ -30,57 +30,54 @@ class PokemonListTableViewCell: UITableViewCell {
         categoriesStackView.removeAllArrangedSubviews()
         
         pokemon.types.map { item in
-            let view = createCustomView(withText: item.type.name)
+            let view = createCustomView(withText: item.type.name.capitalized)
             categoriesStackView.addArrangedSubview(view)
         }
     }
-
-
+    
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//        self.categoriesStackView.removeArrangedSubview(<#T##view: UIView##UIView#>)
-//    }
-    
     func createCustomView(withText text: String) -> UIView {
-            // Create the gray view
-            let grayView = UIView()
-            grayView.backgroundColor = .lightGray
-            grayView.layer.cornerRadius = 10
-            grayView.layer.shadowColor = UIColor.black.cgColor
-            grayView.layer.shadowOpacity = 0.3
-            grayView.layer.shadowOffset = CGSize(width: 2, height: 2)
-            grayView.layer.shadowRadius = 4
-
-            // Create the label
-            let label = UILabel()
-            label.text = text
-            label.textAlignment = .center
-            label.translatesAutoresizingMaskIntoConstraints = false
-
-            // Add the label to the gray view
-            grayView.addSubview(label)
-
-            // Set constraints for the label
+        // Create the gray view
+        let grayView = UIView()
+        grayView.backgroundColor = .lightGray
+        grayView.layer.cornerRadius = 10
+        grayView.layer.shadowColor = UIColor.black.cgColor
+        grayView.layer.shadowOpacity = 0.3
+        grayView.layer.shadowOffset = CGSize(width: 2, height: 2)
+        grayView.layer.shadowRadius = 4
+        
+        // Create the label
+        let label = UILabel()
+        label.text = text
+        label.textAlignment = .center
+        label.font = UIFont(name: "system", size: 14)
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add the label to the gray view
+        grayView.addSubview(label)
+        
+        // Set constraints for the label
         NSLayoutConstraint.activate([
-                    label.topAnchor.constraint(equalTo: grayView.topAnchor, constant: 8),
-                    label.bottomAnchor.constraint(equalTo: grayView.bottomAnchor, constant: -8),
-                    label.leadingAnchor.constraint(equalTo: grayView.leadingAnchor, constant: 8),
-                    label.trailingAnchor.constraint(equalTo: grayView.trailingAnchor, constant: -8)
-                ])
-
-            // Set constraints for the gray view (if needed)
-            grayView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                grayView.heightAnchor.constraint(equalToConstant: 100) // Adjust height as needed
-            ])
-
-            return grayView
-        }
+            label.topAnchor.constraint(equalTo: grayView.topAnchor, constant: 8),
+            label.bottomAnchor.constraint(equalTo: grayView.bottomAnchor, constant: -8),
+            label.leadingAnchor.constraint(equalTo: grayView.leadingAnchor, constant: 8),
+            label.trailingAnchor.constraint(equalTo: grayView.trailingAnchor, constant: -8)
+        ])
+        
+        // Set constraints for the gray view (if needed)
+        grayView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            grayView.heightAnchor.constraint(equalToConstant: 32) // Adjust height as needed
+        ])
+        
+        return grayView
+    }
     
 }

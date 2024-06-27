@@ -7,17 +7,37 @@
 
 @testable import PokeDex
 
-
 class FakeService: ServiceCoreProtocol {
+    
+    var isInError = false
+    
     func fetchPokemonList(_ numberOfRow: Int) async -> Result<PokemonListResponse, Error> {
-        .success(FakeResponses().buildPokemonListResponse())
+        
+        if !isInError {
+            .success(FakeResponses().buildPokemonListResponse())
+        } else {
+            .failure(NetworkError.serverError)
+        }
+        
     }
     
     func fetchPokemonDetails(url: String) async -> Result<PokemonDetailsResponse, Error> {
-        .success(FakeResponses().buildPokemonDetailsResponse())
+        if !isInError {
+            .success(FakeResponses().buildPokemonDetailsResponse(url))
+        } else {
+            .failure(NetworkError.serverError)
+        }
     }
     
     func fetchPokemonSpecies(url: String) async -> Result<PokemonSpeciesResponse, Error> {
-        .success(FakeResponses().buildPokemonSpeciesResponse())
+        if !isInError {
+            .success(FakeResponses().buildPokemonSpeciesResponse(url))
+        } else {
+            .failure(NetworkError.serverError)
+        }
     }
+}
+
+enum NetworkError: Error {
+    case serverError
 }

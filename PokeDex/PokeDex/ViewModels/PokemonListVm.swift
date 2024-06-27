@@ -14,8 +14,12 @@ class PokemonListVm {
     // Service object to fetch pokemon data
     var service: ServiceCoreProtocol? = nil
     
-    @Published var pokemonList: [Pokemon] = []
+    @Published var pokemonListToShow: [Pokemon] = []
     @Published var pokemonListFiltered: [Pokemon] = []
+    @Published var serviceInError: Bool = false
+    @Published var isLoading: Bool = false
+    
+    var pokemonList: [Pokemon] = []
     var queryToSearch: String?
     
     // Initialization
@@ -31,10 +35,6 @@ class PokemonListVm {
     }
     
     func viewIsReady() {
-        //        guard !isMock else {
-        //            self.view?.viewState = listViewState
-        //            return
-        //        }
         retrieveData()
     }
     
@@ -44,23 +44,22 @@ class PokemonListVm {
             let name = pokemon.name.uppercased()
             return name.contains(query.uppercased())
         })
-        
-        
-        
     }
     
-    func retrieveData(){
+    func retrieveData() {
+        isLoading = true
         Task {
             let result = await service?.fetchPokemonList(self.pokemonList.count)
             
             switch result {
             case .success(let response):
                                 
+                self.serviceInError = false
                 await self.fetchPokemonDetails(for: response.results)
                 
             case .failure(_):
-                print("Error fetching pokemon")
-                break
+                isLoading = false
+                self.serviceInError = true
             case .none:
                 break
             }
@@ -85,6 +84,7 @@ class PokemonListVm {
                                                 description: description ?? "",
                                                 types: response.types)
                 
+                self.pokemonList.append(pokemon)
                 arrayOfPokemon.append(pokemon)
                 
             default:
@@ -92,7 +92,8 @@ class PokemonListVm {
             }
             
         }
-        self.pokemonList = arrayOfPokemon
+        self.pokemonListToShow = arrayOfPokemon
+        isLoading = false
     }
     
     func retrieveSpecies(_ url: String) async -> String? {
@@ -109,7 +110,7 @@ class PokemonListVm {
             return description.first?.flavor_text
             
         case .failure(_):
-            print("Error fetching pokemon")
+            print("Error fetching description")
             return nil
         case .none:
             return nil

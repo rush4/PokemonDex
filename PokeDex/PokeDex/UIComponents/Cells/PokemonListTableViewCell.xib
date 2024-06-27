@@ -27,22 +27,22 @@
                         <rect key="frame" x="136" y="8" width="219" height="120"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbO-lu-MZI">
-                                <rect key="frame" x="8" y="8" width="203" height="21"/>
+                                <rect key="frame" x="8" y="8" width="203" height="16"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="2CC-hB-Lkn"/>
+                                    <constraint firstAttribute="height" constant="16" id="2CC-hB-Lkn"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="eUx-UQ-zpT">
-                                <rect key="frame" x="8" y="37" width="203" height="32"/>
+                                <rect key="frame" x="8" y="32" width="203" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="Ps1-km-SJy"/>
+                                    <constraint firstAttribute="height" constant="36" id="Ps1-km-SJy"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0d-Pw-MUK">
-                                <rect key="frame" x="8" y="77" width="203" height="35"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0d-Pw-MUK">
+                                <rect key="frame" x="8" y="76" width="203" height="36"/>
                                 <string key="text">jcbsdkcnaskjcnksjxnkasjxnaksjxnajksxnakjsxnaksjxxskjxaskxasxnasxnaskxmasklxmalskxmaskxasmxlkasmxlkasmxlkasmxlkasnajksxnaksjxnakjsnxkjasnx</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>

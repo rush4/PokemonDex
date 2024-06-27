@@ -31,10 +31,6 @@ public class MainCoordinator: NSObject {
         
         navigationController?.pushViewController(viewController, animated: true)
     }
-    
-    func goToPokemonDetailsVc(){
-
-    }
 }
 
 // Delegate methods for UINavigationControllerDelegate
